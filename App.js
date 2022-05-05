@@ -107,7 +107,6 @@ export default function App() {
       ]
     )
   }
-
  
   return (
     <View style={styles.container}>
@@ -119,6 +118,7 @@ export default function App() {
             <RNPickerSelect
               style={styles.selector}
               onValueChange={(value) => value === 'false' ? setSort(false) : setSort(value)}
+              useNativeAndroidPickerStyle={false}
               placeholder= {{ label: 'Default', value: 'false' }}
               items={[
                   { label: 'Name', value: 'name' },
@@ -131,10 +131,12 @@ export default function App() {
             <RNPickerSelect
                 style={styles.input}
                 onValueChange={(value) => value === 'Select an item...' ? setOrder('asc') : setOrder(value)}
+                useNativeAndroidPickerStyle={false}
                 placeholder={{ label: 'Asc', value: 'asc' }}
                 items={[
                     { label: 'Desc', value: 'desc' },
                 ]}
+
               />
           </View>
         <Button title='Press me' onPress={() => setLoadData(!loadData)}/>
@@ -145,6 +147,7 @@ export default function App() {
             <RNPickerSelect
               style={styles.selector}
               onValueChange={(value) => setSearch(value)}
+              useNativeAndroidPickerStyle={false}
               placeholder= {{ label: 'All fields', value: 'search' }}
               items={[
                   { label: 'Name', value: 'name' },
