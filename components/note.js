@@ -96,7 +96,7 @@ const Note = () => {
                 <Text style={styles.buttontxt}>No results found</Text>
             : null}
             {data.length !== 0 && page >= data.length ? 
-                <Button title='results' />
+                <Button title='results' onPress={() => navigation.navigate('Results')} />
             : null}
             </View>
         </View>
