@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Text, View, Image, TextInput } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import styles from '../Styles';
@@ -10,6 +10,7 @@ const Note = () => {
     const [data, setData] = useState([])
     const [page, setPage] = useState(0)
     const [note, setNote] = useState(false)
+    const [refreshData , setRefresh] = useState(false)
 
     // Appelle la classe a noter 
     const requireData = async () => {
@@ -23,16 +24,23 @@ const Note = () => {
     };
 
     // Attribue une note à l'élève (user)
-    const next = async (id) => {
-        try{
-            const response = await axios.put(`https://6271686625fed8fcb5e5bb8e.mockapi.io/api/v1/users/${id}`,{ rate: note})
-            setNote(false)
-            setPage(page+1)
+    useEffect(() => {
+        if (refreshData) {
+            const next = async (id) => {
+                try{
+                    const response = await axios.put(`https://6271686625fed8fcb5e5bb8e.mockapi.io/api/v1/users/${id}`,{ rate: note})
+                    setNote(false)
+                    setPage(page+1)
+                    
+                }
+                catch(e) {
+                    setData(e.response.status)
+                }
+            }
+            next(data[page].id);
+            setRefresh(false)
         }
-        catch(e) {
-            setData(e.response.status)
-        }
-    }
+    }, [refreshData]);
     
     return (
         <View style={styles.container}>
@@ -74,19 +82,22 @@ const Note = () => {
                 </View> 
             </View>
             <View style={styles.noteResults}>
-            {data.length !== 0 && data!== 404 ?
+            {data.length !== 0 && data!== 404 && page < data.length ?
                 <View >
                     <Image style={styles.noteLogo} source={{uri : data[page].avatar}}/>
                     <Text  style={styles.noteTxt}>Name : {data[page].name},</Text>
                     <Text  style={styles.noteTxt}>Alias : {data[page].username}</Text>
                     <Text  style={styles.noteTxt}>Class : {data[page].class}</Text>
-                    <TextInput style={ note >20 || note<0 ? styles.wrongNoteInput : styles.noteInput} keyboardType='numeric' maxLength={2} onChangeText={(value)=>{value !== '' ? setNote(value) : setNote(false)}} />
-                    <Button title='next' onPress={() => next(data[page].id)} disabled={note >20 || note<0 || note === false  ? true : false}/>
+                    <TextInput style={ note >20 || note<0 ? styles.wrongNoteInput : styles.noteInput} keyboardType='numeric' maxLength={2} onChangeText={(value)=>{value !== '' ? setNote(value) : setNote(false)}}/>
+                    <Button title='next' onPress={() => setRefresh(!refreshData)} disabled={note >20 || note<0 || note === false  ? true : false}/>
                 </View>
             :null }
             {data === 404 ? 
-            <Text style={styles.buttontxt}>No results found</Text>
-          : null}
+                <Text style={styles.buttontxt}>No results found</Text>
+            : null}
+            {data.length !== 0 && page >= data.length ? 
+                <Button title='results' />
+            : null}
             </View>
         </View>
     )
