@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Button, Text, View, Image, Touchable, Alert, TextInput, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
-import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
-import RNPickerSelect, {defaultStyles} from 'react-native-picker-select';
+import { Button, Text, View, Image, Alert, TextInput, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import RNPickerSelect from 'react-native-picker-select';
 import styles from '../Styles';
 
 const Home = () => {
@@ -19,6 +19,8 @@ const Home = () => {
     const [ allSearch, setAllSearch] = useState(false)
     const [ nameSearch, setNameSearch] = useState(false)
     const [ usernameSearch, setUsernameSearch] = useState(false)
+    const [ classSearch, setClassSearch] = useState(false)
+
     //Url
     let url= 'https://6271686625fed8fcb5e5bb8e.mockapi.io/api/v1/users?page=1'
     
@@ -35,7 +37,9 @@ const Home = () => {
       else if(usernameSearch){
         url+=`&username=${usernameSearch}`
       }
-      console.log(url)
+      else if(classSearch){
+        url+=`&class=${classSearch}`
+      }
       return url
     }
   
@@ -66,17 +70,26 @@ const Home = () => {
       if(search === 'search'){
         setAllSearch(input)
         setNameSearch(false)
+        setClassSearch(false)
         setUsernameSearch(false)
       }
       else if(search === 'name'){
         setNameSearch(input)
         setAllSearch(false)
+        setClassSearch(false)
         setUsernameSearch(false)
       }
       else if(search === 'username'){
         setUsernameSearch(input)
         setNameSearch(false)
+        setClassSearch(false)
         setAllSearch(false)
+      }
+      else if(search === 'class'){
+        setUsernameSearch(false)
+        setNameSearch(false)
+        setAllSearch(false)
+        setClassSearch(input)
       }
       setLoadData(!loadData)
     }
@@ -91,7 +104,6 @@ const Home = () => {
           setData(e.response.status);
         }
         setLoadData(true)
-        console.log('user deleted', delId)
       }
       Alert.alert(
         "Delete this user ?",
@@ -208,6 +220,7 @@ const Home = () => {
                 items={[
                     { label: 'Name', value: 'name' },
                     { label: 'Alias', value: 'username' },
+                    { label: 'Class', value: 'class' },
                 ]}
               />
               <TextInput style={styles.input} onChangeText={(value) => setInput(value)}/>
@@ -229,6 +242,7 @@ const Home = () => {
                 </TouchableWithoutFeedback>
                 <Text  style={styles.txt}>Name : {item.name},</Text>
                 <Text  style={styles.txt}>Alias : {item.username}</Text>
+                <Text  style={styles.txt}>Class : {item.class}</Text>
               </View>
             )}
             keyExtractor={(item, index) => index.toString()}/>
@@ -237,10 +251,10 @@ const Home = () => {
             <Text style={styles.buttontxt}>No results found</Text>
           : null}
         </View>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
       </SafeAreaView>
     );
-  }
+}
 
 export default Home;
   

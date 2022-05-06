@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
     },
+    noteTxt: {
+        color: 'white',
+        fontSize: 30,
+        textAlign: 'center',
+    },
     buttontxt: {
         color: 'white',
     },
@@ -25,6 +30,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 50,
         height: 50,
+    },
+    noteLogo: {
+        alignSelf: 'center',
+        width: 100,
+        height: 100,
     },
     filters: {
         height: '100%',
@@ -51,6 +61,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    noteResults: {
+        alignItems:'center',
+        flex:4 ,
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
     centerise: {
         alignItems: 'center',
         flex:1,
@@ -61,14 +77,41 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         padding:4,
         borderRadius: 4,
-
+    },
+    noteInput: {
+        height: 40,
+        width: 50,
+        fontSize: 30,
+        backgroundColor:'white',
+        padding:2,
+        margin: 5,
+        borderRadius: 4,
+        alignSelf:'center',
+    },
+    wrongNoteInput: {
+        height: 40,
+        width: 50,
+        fontSize: 30,
+        backgroundColor:'#ff6961',
+        borderColor: 'red',
+        borderWidth: 2,
+        padding:2,
+        margin: 5,
+        borderRadius: 4,
+        alignSelf:'center',
     },
     title: {
-        flex:2,
+        flex:1,
         color: 'white',
         fontSize: 30,
         textAlign: 'center',
     },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width:100,
+        paddingRight: 10
+    }
 
 });
 
