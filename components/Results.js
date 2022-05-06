@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as React from 'react';
 import { DataTable } from 'react-native-paper';
 import { useEffect, useState } from 'react';
-import { Text, SafeAreaView, Image } from 'react-native';
+import { Text, Image, ScrollView, View } from 'react-native';
 import styles from '../Styles';
 
 
@@ -34,11 +34,10 @@ const Results = () => {
     }, [loadData]);
      
     return (
-        <SafeAreaView style={styles.container}>
-            {!loadData && data.length === 0 ? <Text style={styles.buttontxt}>Start a search and/or select filters !</Text> : null}
-            {isLoading ? <Text style={styles.buttontxt}>Downloading ...</Text> : null}
+        <ScrollView style={{ backgroundColor:'black' }}>
+            {!loadData && data.length === 0 ? <View style={styles.container}><Text style={styles.title}>Loading table... </Text></View> : null}
             {data.length !== 0 && data!== 404 && !isLoading ? 
-                <DataTable style={{backgroundColor:'white'}} >
+                <DataTable style={{overflow:'scroll', backgroundColor: 'white'}} >
                     <DataTable.Header>
                     <DataTable.Title>Users</DataTable.Title>
                     <DataTable.Title>Name</DataTable.Title>
@@ -47,7 +46,7 @@ const Results = () => {
                 
                 {data.map(item => {
                     return(
-                        <DataTable.Row>
+                        <DataTable.Row style={{height:60, padding: 0, margin :0 }}>
                         <DataTable.Cell> 
                             <Image style={styles.tinyLogo} source={{uri : item.avatar}}/>
                         </DataTable.Cell>
@@ -62,7 +61,7 @@ const Results = () => {
             {data === 404 ? 
                 <Text style={styles.buttontxt}>No results found</Text>
             : null}
-        </SafeAreaView>
+        </ScrollView>
     );
 }
 
