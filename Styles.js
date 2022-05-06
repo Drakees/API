@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         paddingTop:40,
     },
     line: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
         alignContent:'space-around',
         maxHeight: 170,
@@ -53,23 +53,23 @@ const styles = StyleSheet.create({
     },
     centerise: {
         alignItems: 'center',
+        flex:1,
     },
     input: {
-        height: 20,
-        minWidth: 80,
+        height: 25,
+        minWidth: 100,
         backgroundColor:'white',
-    },
-    selector: {
-        minHeight: 20,
-        minWidth: 50,
-        fontSize: 12,
-        backgroundColor:'white',
-        color: 'white',
-        borderColor: 'red',
+        padding:4,
         borderRadius: 4,
-        borderWidth: 2,
-        paddingRight: 30,
-    }
+
+    },
+    title: {
+        flex:2,
+        color: 'white',
+        fontSize: 30,
+        textAlign: 'center',
+    },
+
 });
 
 export default styles;
